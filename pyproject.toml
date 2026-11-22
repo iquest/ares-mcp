@@ -1,0 +1,40 @@
+[project]
+name = "ares-mcp"
+version = "0.1.0"
+description = "Read-only MCP server for the ARES (Czech business register) public REST API"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=2,<3",
+    "httpx>=0.28,<0.29",
+]
+
+[project.scripts]
+ares-mcp = "ares_mcp.__main__:main"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "anyio",
+    "ruff",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ares_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not live'"
+markers = [
+    "live: tests that call the real ARES API (opt-in with -m live)",
+]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

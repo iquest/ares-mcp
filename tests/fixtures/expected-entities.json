@@ -1,0 +1,4 @@
+{
+  "_comment": "Pinned expected values for the live smoke tests (SC-001). The maintainer copies at least 20 entries BY HAND from the public ARES website (https://ares.gov.cz). Do not generate this file from the API: that would make the check circular. Each entry: {\"ico\": \"8 digits\", \"obchodniJmeno\": \"name as shown on the ARES site\", \"pravniForma\": \"3-digit legal form code\"}.",
+  "entities": []
+}
