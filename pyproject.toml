@@ -1,14 +1,35 @@
 [project]
-name = "ares-mcp"
+name = "ares-gov-cz-mcp"
 version = "0.1.0"
 description = "Read-only MCP server for the ARES (Czech business register) public REST API"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
+keywords = ["mcp", "model-context-protocol", "ares", "czech", "business-register", "ico"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries",
+]
 dependencies = [
     "mcp[cli]>=2,<3",
     "httpx>=0.28,<0.29",
 ]
 
+[project.urls]
+Homepage = "https://github.com/iquest/ares-mcp"
+Repository = "https://github.com/iquest/ares-mcp"
+Issues = "https://github.com/iquest/ares-mcp/issues"
+
 [project.scripts]
+ares-gov-cz-mcp = "ares_mcp.__main__:main"
 ares-mcp = "ares_mcp.__main__:main"
 
 [dependency-groups]
@@ -19,11 +40,14 @@ dev = [
 ]
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ares_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/LICENSE", "/pyproject.toml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

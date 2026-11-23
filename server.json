@@ -1,0 +1,53 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.iquest/ares-mcp",
+  "title": "ARES (Czech business register)",
+  "description": "Read-only access to ARES, the Czech register of economic entities. No credentials.",
+  "repository": {
+    "url": "https://github.com/iquest/ares-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "ares-gov-cz-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "ARES_BASE_URL",
+          "description": "ARES API base URL (default https://ares.gov.cz/ekonomicke-subjekty-v-be/rest)",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "ARES_TIMEOUT_SECONDS",
+          "description": "Total timeout per request in seconds (default 10)",
+          "isRequired": false,
+          "format": "number"
+        },
+        {
+          "name": "ARES_MAX_CONCURRENCY",
+          "description": "Most requests in flight at once (default 5)",
+          "isRequired": false,
+          "format": "number"
+        },
+        {
+          "name": "ARES_DEFAULT_COUNT",
+          "description": "Page size when count is omitted (default 20)",
+          "isRequired": false,
+          "format": "number"
+        },
+        {
+          "name": "ARES_MAX_COUNT",
+          "description": "Largest accepted count (default 100)",
+          "isRequired": false,
+          "format": "number"
+        }
+      ]
+    }
+  ]
+}

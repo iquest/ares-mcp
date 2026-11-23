@@ -1,4 +1,6 @@
-# ares-mcp
+# ares-gov-cz-mcp
+
+<!-- mcp-name: io.github.iquest/ares-mcp -->
 
 A read-only [MCP](https://modelcontextprotocol.io) server for **ARES**, the Czech register of
 economic entities. It lets an AI assistant look up companies by IČO, search by name and other
@@ -9,15 +11,20 @@ It targets ARES REST API **version 1.4** and covers **all 26 operations** of tha
 
 ## Install and start
 
-Requires [uv](https://docs.astral.sh/uv/) and `git`.
-
-Run straight from GitHub, with no checkout (uv downloads and caches it):
+Requires [uv](https://docs.astral.sh/uv/). Run it from PyPI, with no checkout (uv downloads and
+caches it):
 
 ```bash
-uvx --from git+https://github.com/iquest/ares-mcp ares-mcp    # serves MCP over stdio
+uvx ares-gov-cz-mcp    # serves MCP over stdio
 ```
 
-To work on the code instead, clone it (Python 3.10+):
+To run the latest unreleased code from GitHub instead (this also needs `git`):
+
+```bash
+uvx --from git+https://github.com/iquest/ares-mcp ares-gov-cz-mcp
+```
+
+To work on the code, clone it (Python 3.10+):
 
 ```bash
 git clone https://github.com/iquest/ares-mcp.git && cd ares-mcp
@@ -34,17 +41,16 @@ Add this to the client's MCP configuration:
   "mcpServers": {
     "ares": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/iquest/ares-mcp", "ares-mcp"]
+      "args": ["ares-gov-cz-mcp"]
     }
   }
 }
 ```
 
-For Claude Code:
-`claude mcp add ares -- uvx --from git+https://github.com/iquest/ares-mcp ares-mcp`
+For Claude Code: `claude mcp add ares -- uvx ares-gov-cz-mcp`
 
-To pin a version, add `@<tag-or-commit>` at the end of the URL. To update, run `uvx --refresh`
-with the same arguments. To run a local checkout instead, use
+To pin a version, use `"ares-gov-cz-mcp==0.1.0"`. To update, run `uvx --refresh ares-gov-cz-mcp`.
+To run a local checkout instead, use
 `uv --directory /absolute/path/to/ares-mcp run python -m ares_mcp` as the command.
 
 ## Tools
@@ -116,3 +122,19 @@ and legal form, copied by hand from the public ARES website. Do not generate the
 
 `tests/fixtures/ares-openapi.json` is a snapshot of the ARES OpenAPI document. A test checks that
 every operation in it is reachable through one of the 8 tools.
+
+## Release
+
+Pushing a tag `vX.Y.Z` runs `.github/workflows/release.yml`. It checks that the tag,
+`pyproject.toml` and `server.json` carry the same version, runs ruff and the offline tests,
+builds, publishes to PyPI (trusted publishing), then publishes `server.json` to the
+[MCP Registry](https://registry.modelcontextprotocol.io) (GitHub OIDC). To release, change the
+version in `pyproject.toml` and in both places in `server.json`, commit, then tag and push.
+
+One-time setup:
+
+- On pypi.org, add a *pending* trusted publisher: project `ares-gov-cz-mcp`, owner `iquest`,
+  repository `ares-mcp`, workflow `release.yml`, environment `pypi`.
+- In the GitHub repository settings, create an environment named `pypi`.
+- The `<!-- mcp-name: ... -->` line at the top of this file proves to the registry that the PyPI
+  package belongs to `io.github.iquest/ares-mcp`. Keep it in sync with `server.json`.

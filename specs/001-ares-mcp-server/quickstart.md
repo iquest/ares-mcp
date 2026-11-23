@@ -31,7 +31,7 @@ Expected: a known IČO returns its record (SC-001 sample), a name search returns
 
 ## Manual check with an MCP client
 
-1. Start the server over stdio: `uv run python -m ares_mcp` (or the console script `uv run ares-mcp`), from an MCP client.
+1. Start the server over stdio: `uv run python -m ares_mcp` (or the console script `uv run ares-gov-cz-mcp`), from an MCP client.
 2. Call each scenario below and compare with the public ARES site.
 
 `uv run mcp dev src/ares_mcp/server.py` does not work: `server.py` uses relative imports, so loading it by file path fails.
@@ -52,20 +52,20 @@ Expected: a known IČO returns its record (SC-001 sample), a name search returns
 
 ## Connecting an MCP client
 
-Add the server to a client's MCP configuration so the client launches it over stdio straight from GitHub:
+Add the server to a client's MCP configuration so the client launches it over stdio from PyPI:
 
 ```json
 {
   "mcpServers": {
     "ares": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/iquest/ares-mcp", "ares-mcp"]
+      "args": ["ares-gov-cz-mcp"]
     }
   }
 }
 ```
 
-For Claude Code the equivalent is `claude mcp add ares -- uvx --from git+https://github.com/iquest/ares-mcp ares-mcp`. To run a local checkout instead, use `uv --directory /absolute/path/to/ares-mcp run python -m ares_mcp` as the command.
+For Claude Code the equivalent is `claude mcp add ares -- uvx ares-gov-cz-mcp`. To run unreleased code from GitHub, use `uvx --from git+https://github.com/iquest/ares-mcp ares-gov-cz-mcp`. To run a local checkout instead, use `uv --directory /absolute/path/to/ares-mcp run python -m ares_mcp` as the command.
 
 ## Done when
 

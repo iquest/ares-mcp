@@ -58,7 +58,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ares-mcp"
+name = "ares-gov-cz-mcp"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
