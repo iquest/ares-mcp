@@ -52,20 +52,20 @@ Expected: a known IČO returns its record (SC-001 sample), a name search returns
 
 ## Connecting an MCP client
 
-Add the server to a client's MCP configuration so the client launches it over stdio. Replace the path with the absolute path of this repository:
+Add the server to a client's MCP configuration so the client launches it over stdio straight from GitHub:
 
 ```json
 {
   "mcpServers": {
     "ares": {
-      "command": "uv",
-      "args": ["--directory", "/absolute/path/to/ares-mcp", "run", "python", "-m", "ares_mcp"]
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/iquest/ares-mcp", "ares-mcp"]
     }
   }
 }
 ```
 
-For Claude Code the equivalent is `claude mcp add ares -- uv --directory /absolute/path/to/ares-mcp run python -m ares_mcp`.
+For Claude Code the equivalent is `claude mcp add ares -- uvx --from git+https://github.com/iquest/ares-mcp ares-mcp`. To run a local checkout instead, use `uv --directory /absolute/path/to/ares-mcp run python -m ares_mcp` as the command.
 
 ## Done when
 

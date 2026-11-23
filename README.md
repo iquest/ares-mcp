@@ -9,30 +9,43 @@ It targets ARES REST API **version 1.4** and covers **all 26 operations** of tha
 
 ## Install and start
 
-Requires Python 3.10+ and [uv](https://docs.astral.sh/uv/).
+Requires [uv](https://docs.astral.sh/uv/) and `git`.
+
+Run straight from GitHub, with no checkout (uv downloads and caches it):
 
 ```bash
+uvx --from git+https://github.com/iquest/ares-mcp ares-mcp    # serves MCP over stdio
+```
+
+To work on the code instead, clone it (Python 3.10+):
+
+```bash
+git clone https://github.com/iquest/ares-mcp.git && cd ares-mcp
 uv sync
-uv run python -m ares_mcp        # serves MCP over stdio
+uv run python -m ares_mcp
 ```
 
 ## Connect an MCP client
 
-Add this to the client's MCP configuration, with the absolute path of this repository:
+Add this to the client's MCP configuration:
 
 ```json
 {
   "mcpServers": {
     "ares": {
-      "command": "uv",
-      "args": ["--directory", "/absolute/path/to/ares-mcp", "run", "python", "-m", "ares_mcp"]
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/iquest/ares-mcp", "ares-mcp"]
     }
   }
 }
 ```
 
 For Claude Code:
-`claude mcp add ares -- uv --directory /absolute/path/to/ares-mcp run python -m ares_mcp`
+`claude mcp add ares -- uvx --from git+https://github.com/iquest/ares-mcp ares-mcp`
+
+To pin a version, add `@<tag-or-commit>` at the end of the URL. To update, run `uvx --refresh`
+with the same arguments. To run a local checkout instead, use
+`uv --directory /absolute/path/to/ares-mcp run python -m ares_mcp` as the command.
 
 ## Tools
 
